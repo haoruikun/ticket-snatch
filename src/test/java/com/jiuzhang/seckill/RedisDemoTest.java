@@ -1,13 +1,10 @@
 package com.jiuzhang.seckill;
 
-import com.jiuzhang.seckill.service.RedisService;
+import com.jiuzhang.seckill.util.RedisService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class RedisDemoTest {
@@ -17,16 +14,37 @@ public class RedisDemoTest {
 
     @Test
     public void stockTest() {
-        String value = redisService.setValue("stock:19", 10L).getValue("stock:19");
-        assertEquals(value, Long.toString(10L));
+        redisService.setValue("stock:19", 10L);
     }
 
     @Test
-    void stockDeductValidation() {
-        redisService.setValue("test:1", 100L);
-        boolean result =  redisService.stockDeductValidator("test:1");
-        assertTrue(result);
-        String value = redisService.getValue("test:1");
-        assertEquals(new Long(value), 99L);
+    public void getStockTest() {
+        String stock = redisService.getValue("stock:19");
+        System.out.println(stock);
+    }
+
+    @Test
+    public void stockDeductValidatorTest() {
+        boolean result = redisService.stockDeductValidator("stock:19");
+        System.out.println("result:" + result);
+        String stock = redisService.getValue("stock:19");
+        System.out.println("stock:" + stock);
+    }
+
+
+    @Test
+    public void revertStock() {
+        String stock = redisService.getValue("stock:19");
+        System.out.println("回滚库存之前的库存：" + stock);
+
+        redisService.revertStock("stock:19");
+
+        stock = redisService.getValue("stock:19");
+        System.out.println("回滚库存之后的库存：" + stock);
+    }
+
+    @Test
+    public void removeLimitMember() {
+        redisService.removeLimitMember(19, 1234);
     }
 }

@@ -2,25 +2,25 @@ package com.jiuzhang.seckill.component;
 
 import com.jiuzhang.seckill.db.dao.SeckillActivityDao;
 import com.jiuzhang.seckill.db.po.SeckillActivity;
-import com.jiuzhang.seckill.service.RedisService;
+import com.jiuzhang.seckill.util.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Component
-public class RedisPreheatRunner  implements ApplicationRunner {
-    @Resource
+public class RedisPreheatRunner implements ApplicationRunner {
+
+    @Autowired
     RedisService redisService;
 
-    @Resource
+    @Autowired
     SeckillActivityDao seckillActivityDao;
 
     /**
-     * 启动项目时 向 Redis 存入 商品库存
+     * 商品缓存预热
      * @param args
      * @throws Exception
      */
@@ -32,4 +32,5 @@ public class RedisPreheatRunner  implements ApplicationRunner {
                     (long) seckillActivity.getAvailableStock());
         }
     }
+
 }

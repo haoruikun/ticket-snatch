@@ -7,14 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
 
 @SpringBootTest
 public class DaoTest {
-    @Resource
+
+    @Autowired
     private SeckillActivityMapper seckillActivityMapper;
+
     @Autowired
     private SeckillActivityDao seckillActivityDao;
 
@@ -34,9 +35,10 @@ public class DaoTest {
     }
 
     @Test
-    void setSeckillActivityQuery() {
+    void setSeckillActivityQuery(){
         List<SeckillActivity> seckillActivitys = seckillActivityDao.querySeckillActivitysByStatus(0);
         System.out.println(seckillActivitys.size());
         seckillActivitys.stream().forEach(seckillActivity -> System.out.println(seckillActivity.toString()));
     }
+
 }

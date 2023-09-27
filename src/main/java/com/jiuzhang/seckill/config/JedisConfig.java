@@ -36,7 +36,7 @@ public class JedisConfig extends CachingConfigurerSupport {
 
 
     @Bean
-    public JedisPool redisPoolFactory() {
+    public JedisPool redisPoolFactory(){
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
